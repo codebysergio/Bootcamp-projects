@@ -18,5 +18,12 @@ resource "aws_vpc_security_group_ingress_rule" "name" {
   ip_protocol       = "tcp"
   from_port         = 22
   to_port           = 22
-  cidr_ipv4 = "0.0.0.0/0"
+  cidr_ipv4         = "0.0.0.0/0"
+}
+resource "aws_instance" "ec2-instance" {
+  instance_type               = var.instance-type
+  ami                         = var.ec2-ami
+  vpc_security_group_ids      = [aws_security_group.main-sg.id]
+  associate_public_ip_address = true
+  subnet_id = aws_subnet.public.id
 }
